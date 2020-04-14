@@ -1,0 +1,1 @@
+# dsc_305_hand_scratch_recognition
