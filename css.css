@@ -1,0 +1,12 @@
+body {
+        background-color: yellow;
+    }
+
+div {
+        width: 400px;
+        margin: 0 auto;
+    }
+
+#c1 {
+        background-color: white;
+    }
