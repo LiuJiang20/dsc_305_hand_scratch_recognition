@@ -22,6 +22,9 @@ window.onload = function () {
                 };
         // use guess button
         d3.select('#guess').attr("class","normal");
+        // disable buttons
+        d3.select('#changelist')
+         .attr("class","disabled");
             };
         
     };
@@ -30,8 +33,20 @@ window.onload = function () {
 document.getElementById("retry").addEventListener('click',function(){
     context.clearRect(0,0,canvas.width,canvas.height);
     context.beginPath();
-    // cannot use guess button
-     d3.select('#guess').attr("class","disabled");
+    // disable buttons
+     d3.select('#guess')
+         .attr("class","disabled");
+    
+    d3.select('#T')
+         .attr("class","disabled");
+    
+    d3.select('#F')
+         .attr("class","disabled");
+    
+    // ennable buttons
+    d3.select('#changelist')
+         .attr("class","normal");
+    
 },false);
 
 // items list
@@ -45,6 +60,15 @@ d3.select("#items")
     .append("td")
     .text(function(i){
     return i;
+})
+
+d3.select("#guess")
+    .on("click",function(){
+        d3.select("#T")
+        .attr("class","normal")
+    
+        d3.select("#F")
+        .attr("class","normal")
 })
 
 
