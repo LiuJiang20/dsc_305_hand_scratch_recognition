@@ -5,10 +5,29 @@
     </head>
     
     <body>
-        <p>Hello world!</p>
-          <div>
-            <canvas id="c1" width="800px" height="400px">
+            <table id="options">
+                <tbody width="1000px">
+                    <th colspan="11">Possible Items</th>
+                    <tr id="items"><tr>
+                </tbody>    
+            </table>
+        
+        <div id='canvas'>
+            <img src="canvas.png" id="canvasimg">
+            <canvas id="c1" width="590px" height="410px">
             </canvas>
+        </div>
+            
+        
+        <div id='robot'>
+            <img src="robot.png" id="robotimg">
+            <div id="dialog">
+                <img src="dialog.png" id="bubble">
+                <div id="dialogText">
+                    <p>Please selet one item to draw from the current list.</p>
+                </div> 
+            </div>
+            
         </div>
     </body>
     <script src="jscode.js"></script>
