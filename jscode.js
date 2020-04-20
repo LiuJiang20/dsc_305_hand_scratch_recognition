@@ -23,3 +23,14 @@ window.onload = function () {
         
             };
     };
+
+var items=['foot','hand','hedgehog','horse','line',' microphone','skull','steak','table','telephone','filp flops']
+
+d3.select("#items")
+    .selectAll("td")
+    .data(items)
+    .enter()
+    .append("td")
+    .text(function(i){
+    return i;
+})
