@@ -1,31 +1,43 @@
-var test = window.devicePixelRatio
-            console.log(test);
+var test = window.devicePixelRatio;
+
+var canvas = document.getElementById("c1");
+var context = canvas.getContext("2d");
 
 window.onload = function () {
-    var oC = document.getElementById('c1');
-    var oCG = oC.getContext('2d');
     
-    oC.onmousedown = function (ev) {
+    canvas.onmousedown = function (ev) {
         var ev = ev || window.event;
-        oCG.moveTo(ev.clientX - oC.offsetLeft, ev.clientY - oC.offsetTop);
+        context.moveTo(ev.clientX - canvas.offsetLeft, ev.clientY - canvas.offsetTop);
         //ev.clientX-oC.offsetLeft,ev.clientY-oC.offsetTop鼠标在当前画布上X,Y坐标
         
         document.onmousemove = function (ev) {
                 var ev = ev || window.event;//获取event对象
-                oCG.lineTo(ev.clientX - oC.offsetLeft, ev.clientY - oC.offsetTop);
-                oCG.stroke();
+                context.lineTo(ev.clientX - canvas.offsetLeft, ev.clientY - canvas.offsetTop);
+                context.stroke();
                     };
         
-        oC.onmouseup = function () {
+        canvas.onmouseup = function () {
                 document.onmousemove = null;
                 document.onmouseup = null;
                 };
-        
+        // use guess button
+        d3.select('#guess').attr("class","normal");
             };
+        
     };
 
+// retry button click
+document.getElementById("retry").addEventListener('click',function(){
+    context.clearRect(0,0,canvas.width,canvas.height);
+    context.beginPath();
+    // cannot use guess button
+     d3.select('#guess').attr("class","disabled");
+},false);
+
+// items list
 var items=['foot','hand','hedgehog','horse','line',' microphone','skull','steak','table','telephone','filp flops']
 
+// draw item table
 d3.select("#items")
     .selectAll("td")
     .data(items)
@@ -34,3 +46,5 @@ d3.select("#items")
     .text(function(i){
     return i;
 })
+
+
