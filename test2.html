@@ -11,8 +11,6 @@
     <!-- Place your code in the script tag below. You can also use an external .js file -->
     <script>
         
-        
-
       // Notice there is no 'import' statement. 'tf' is available on the index-page
       // because of the script tag above.
 
@@ -41,13 +39,25 @@
     </script>
       <style>
           img{
-              filter: grayscale(100%)
+              filter: grayscale(100%);
+          }
+          body{
+              background-color: beige;
+          }
+          canvas{
+              background-color: white;
           }
 </style>
   </head>
     <body>
-        <canvas id="canvas"></canvas>
-        <img scr='table.png' id="target" alt="not found" width="28" height="28">
+ <div id='robot'>
+            <img src="table.png" id="target">
+   
+        </div>
+        <div id='canvas'>
+            <canvas id="canvas" width="590px" height="410px">
+            </canvas>
+        </div>
     </body>
   <body>
   </body>

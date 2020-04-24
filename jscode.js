@@ -1,8 +1,4 @@
-import * as tf from '@tensorflow/tfjs'
-var model = await tf.loadLayersModel('./eleven_class/model.json')
 
-var example = tf.fromPixels(webcamElement);  // for example
-var prediction = model.predict(example);
 
 var test = window.devicePixelRatio;
 
