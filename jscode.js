@@ -1,7 +1,15 @@
+import * as tf from '@tensorflow/tfjs'
+var model = await tf.loadLayersModel('./eleven_class/model.json')
+
+var example = tf.fromPixels(webcamElement);  // for example
+var prediction = model.predict(example);
+
 var test = window.devicePixelRatio;
 
 var canvas = document.getElementById("c1");
 var context = canvas.getContext("2d");
+
+var counter=3
 
 window.onload = function () {
     
@@ -63,12 +71,66 @@ d3.select("#items")
 })
 
 d3.select("#guess")
+    .text("Guess "+counter+"/3")
     .on("click",function(){
+        if(counter==3){
+            var target=canvas.toDataURL()
+        }
+        d3.select("#retry")
+           .attr("class","disabled")
+    
         d3.select("#T")
         .attr("class","normal")
     
         d3.select("#F")
         .attr("class","normal")
+        
+        //model calculation
+        var answer="model answer"
+        d3.select("#description")
+            .text("This is a "+answer)
+        
+    
+})
+
+d3.select("#F")
+.on("click",function(){
+    if (counter>=1){
+        counter=counter-1
+    d3.select("#guess")
+    .text("Guess "+counter+"/3")
+    }
+    
+    if (counter==0){
+        d3.select("#retry")
+           .attr("class","normal")
+           .on("click",function(){
+                counter=3
+                d3.select("#guess")
+                   .text("Guess "+counter+"/3")
+                console.log(counter)})
+         } 
+    })
+
+d3.select("#T")
+    .on("click",function(){
+            d3.select("#retry")
+              .attr("class","normal")
+    
+            counter=3
+            d3.select("#guess")
+              .text("Guess "+counter+"/3")
+            console.log(counter)
+            
+            d3.select("#description")
+                .text("画成这样也能猜出来，我好牛")
+    
+            d3.select("#dialogText")
+                .append("img")
+                .attr("id","mood")
+                .attr("src","./imgs/happy.gif")
+                .attr("height","120px")
+    
 })
 
 
