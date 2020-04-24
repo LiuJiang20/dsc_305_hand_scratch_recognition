@@ -1,0 +1,54 @@
+<html>
+  <head>
+    <!-- Load TensorFlow.js 
+
+
+-->
+   
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js">
+      </script>
+
+    <!-- Place your code in the script tag below. You can also use an external .js file -->
+    <script>
+        
+        
+
+      // Notice there is no 'import' statement. 'tf' is available on the index-page
+      // because of the script tag above.
+
+      // Define a model for linear regression.
+        async function main(){
+            // const model = await tf.loadLayersModel('https://github.com/LiuJiang20/dsc_305_hand_scratch_recognition/blob/master/eleven_class/model.json');
+            var canvas = document.getElementById("canvas")
+            var ctx = canvas.getContext("2d");
+            var image = document.getElementById('target');
+
+            var hello=ctx.drawImage(image,28,28);
+            console.log("hellllll")
+            console.log(hello)
+            
+            const example = tf.browser.fromPixels(target);  // for example
+            const prediction = model.predict(example);
+            
+            console.log(prediction);
+
+        }
+        main()
+
+        
+        
+     
+    </script>
+      <style>
+          img{
+              filter: grayscale(100%)
+          }
+</style>
+  </head>
+    <body>
+        <canvas id="canvas"></canvas>
+        <img scr='table.png' id="target" alt="not found" width="28" height="28">
+    </body>
+  <body>
+  </body>
+</html>
