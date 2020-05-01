@@ -100,6 +100,11 @@ d3.select("#F")
             .text("Guess "+counter+"/3")
         d3.select("#mood")
             .attr("src","./imgs/counter"+counter+".gif")
+        
+        if (counter!=3){
+            d3.select("#description")
+                .text("Please give me one more chance...")
+        }
     }
     
     if (counter==0){
@@ -134,7 +139,7 @@ d3.select("#T")
             console.log(counter)
             
             d3.select("#description")
-                .text("画成这样也能猜出来，我好牛")
+                .text("Now you know why I am AI? yeahhhhh!")
     
             d3.select("#mood")
                 .attr("src","./imgs/happy.gif")
