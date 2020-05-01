@@ -42,7 +42,7 @@
         async function main(){
             const tf = require("@tensorflow/tfjs");
             const tfn = require("@tensorflow/tfjs-node");
-            const handler = tfn.io.fileSystem("./eleven_class/model.json");
+            const handler = tfn.io.fileSystem("https://raw.githubusercontent.com/LiuJiang20/dsc_305_hand_scratch_recognition/master/eleven_class/model.json");
             const model = await tf.loadModel(handler);  
              //const model = await tf.loadLayersModel('');
             //var canvas = document.getElementById("canvas");
