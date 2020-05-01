@@ -7,6 +7,69 @@ var context = canvas.getContext("2d");
 
 var counter=3
 
+var getInput=function(){
+   var canvas = document.getElementById("c1")
+   var data = canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height).data
+   var result=[]
+   for (i=0;i<data.length;i+=4){
+       result.push(data[i]/255)
+       
+   }
+    console.log(result)
+    
+    var input=tf.tensor(result,[1,512,512,1])
+    var input2=tf.maxPool(input,2,2,0) //256
+    var input3=tf.maxPool(input2,2,2,0) //128
+    var input4=tf.maxPool(input3,2,2,0) //64
+    var input5=tf.maxPool(input4,2,2,0) //32
+    var input6=input5.reshape([32,32])
+    var input7=tf.slice(input6,[2,2],[28,28])
+    var finput=input7.reshape([1,28,28,1])
+    console.log(finput.dataSync())
+
+    return finput
+}
+
+async function getAnswer(){
+             console.log('start');
+        const model = await tf.loadLayersModel('https://raw.githubusercontent.com/LiuJiang20/dsc_305_hand_scratch_recognition/master/eleven_class/model.json');
+        console.log(model);
+        console.log('done');
+  
+             //const model = await tf.loadLayersModel('');
+            //var canvas = document.getElementById("canvas");
+            //var context = canvas.getContext("2d");
+           // var image = document.getElementById('target');
+
+            //var hello=context.drawImage(image,28,28);
+
+           // console.log(target)
+            //const example = tf.browser.fromPixels(image);  // for example
+            var input=getInput()
+            const prediction = model.predict(input).argMax([-1]);
+            console.log(prediction.dataSync())
+            
+            const labelMap = new Map([
+                [0, "flip flop"],
+                [1, "foot"],
+                [2, "hand"],
+                [3, "hedgehog"],
+                [4, "hourse"],
+                [5, "line"],
+                [6, "microphone"],
+                [7, "skull"],
+                [8, "steak"],
+                [9, "table"],
+                [10, "telephone"]
+                            ]);
+            console.log(labelMap.get(prediction.dataSync()[0]))
+    
+            
+  }
+ 
+            
+             
+
 window.onload = function () {
     
     canvas.onmousedown = function (ev) {
@@ -72,7 +135,7 @@ d3.select("#guess")
     .text("Guess "+counter+"/3")
     .on("click",function(){
         if(counter==3){
-            var target=canvas.toDataURL()
+            getAnswer()
         }
 
         d3.select("#retry")
