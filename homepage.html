@@ -24,6 +24,7 @@
         
         <div id='robot'>
             <img src="./imgs/robot.png" id="robotimg">
+            <img src="./imgs/counter3.gif" id="mood">
             <div id="dialog">
                 <img src="./imgs/dialog.png" id="bubble">
                 <div id="dialogText">
@@ -44,33 +45,4 @@
         
     </body>
     <script src="jscode.js"></script>
-    <script>
-        
-      // Notice there is no 'import' statement. 'tf' is available on the index-page
-      // because of the script tag above.
-
-      // Define a model for linear regression.
-        async function main(){
-            // const model = await tf.loadLayersModel('https://github.com/LiuJiang20/dsc_305_hand_scratch_recognition/blob/master/eleven_class/model.json');
-            d3.select("#guess")
-            .on("click",function(){
-                var canvas = document.getElementById("c1");
-            var context = canvas.getContext("2d");
-
-
-            const example = tf.browser.fromPixels(context);  // for example
-            
-            const prediction = model.predict(example);
-            
-            console.log(prediction);
-            })
-            
-
-        }
-        main()
-
-        
-        
-     
-    </script>
 </html>

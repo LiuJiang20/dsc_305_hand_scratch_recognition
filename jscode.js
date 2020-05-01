@@ -51,6 +51,8 @@ document.getElementById("retry").addEventListener('click',function(){
     d3.select('#changelist')
          .attr("class","normal");
     
+    d3.select("#mood")
+        .attr("src","./imgs/counter3.gif")
 },false);
 
 // items list
@@ -72,6 +74,7 @@ d3.select("#guess")
         if(counter==3){
             var target=canvas.toDataURL()
         }
+
         d3.select("#retry")
            .attr("class","disabled")
     
@@ -93,8 +96,10 @@ d3.select("#F")
 .on("click",function(){
     if (counter>=1){
         counter=counter-1
-    d3.select("#guess")
-    .text("Guess "+counter+"/3")
+        d3.select("#guess")
+            .text("Guess "+counter+"/3")
+        d3.select("#mood")
+            .attr("src","./imgs/counter"+counter+".gif")
     }
     
     if (counter==0){
@@ -105,6 +110,16 @@ d3.select("#F")
                 d3.select("#guess")
                    .text("Guess "+counter+"/3")
                 console.log(counter)})
+        d3.select("#guess")
+           .attr("class","disabled")
+        d3.select("#T")
+           .attr("class","disabled")
+        d3.select("#F")
+           .attr("class","disabled")
+        d3.select("#changelist")
+           .attr("class","normal")
+        d3.select("#description")
+                .text("I'm so sorry, I have no idea what u are drawing about...")
          } 
     })
 
@@ -121,11 +136,8 @@ d3.select("#T")
             d3.select("#description")
                 .text("画成这样也能猜出来，我好牛")
     
-            d3.select("#dialogText")
-                .append("img")
-                .attr("id","mood")
+            d3.select("#mood")
                 .attr("src","./imgs/happy.gif")
-                .attr("height","120px")
     
 })
 

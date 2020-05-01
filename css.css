@@ -60,6 +60,13 @@ td{
     width: 350px;
 }
 
+#mood{
+    position: relative;
+    top: -320px;
+    left: -210px;
+    width: 120px;
+}
+
 #bubble{
     width: 400px;
     position: relative;
