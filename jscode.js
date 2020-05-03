@@ -9,14 +9,16 @@ var counter=3
 
 var getInput=function(){
    var canvas = document.getElementById("c1")
-   var data = canvas.getContext("2d").getImageData(0, 0, canvas.width, canvas.height).data
+   var ctx=canvas.getContext("2d")
+   var data = ctx.getImageData(0, 0, canvas.width, canvas.height).data
+   console.log(data)
    var result=[]
-   for (i=0;i<data.length;i+=4){
+   for (i=3;i<data.length;i+=4){
        result.push(data[i]/255)
        
    }
     console.log(result)
-    
+    //var finput=distort(result)
     var input=tf.tensor(result,[1,512,512,1])
     var input2=tf.maxPool(input,2,2,0) //256
     var input3=tf.maxPool(input2,2,2,0) //128
@@ -28,6 +30,20 @@ var getInput=function(){
     console.log(finput.dataSync())
 
     return finput
+}
+
+function distort(imageData) {
+  return tf.tidy(function () {
+    // The shape is (h, w, 1)
+    let tensor = tf.brower.fromPixels(imageData, numChannels = 1);
+
+    // Resize to 28x28 and normalize to 0 (black) and 1 (white)
+    let normalizedImage = tf.image.resizeBilinear(tensor, [28, 28]).toFloat();
+    normalizedImage = tf.ceil(normalizedImage.div(tf.scalar(255.0)));
+
+    // Add a dimension to get a batch shape so that the shape will become (1, h, w, 1)
+    return normalizedImage.expandDims(0);
+  })
 }
 
 async function getAnswer(){
@@ -136,6 +152,7 @@ d3.select("#guess")
     .on("click",function(){
         if(counter==3){
             getAnswer()
+            
         }
 
         d3.select("#retry")
