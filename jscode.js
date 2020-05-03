@@ -48,7 +48,7 @@ function distort(imageData) {
 
 async function getAnswer(){
              console.log('start');
-        const model = await tf.loadLayersModel('https://raw.githubusercontent.com/LiuJiang20/dsc_305_hand_scratch_recognition/master/eleven_class/model.json');
+        const model = await tf.loadLayersModel('https://raw.githubusercontent.com/LiuJiang20/dsc_305_hand_scratch_recognition/master/ten_class/model.json');
         console.log(model);
         console.log('done');
   
@@ -66,18 +66,16 @@ async function getAnswer(){
             console.log(prediction.dataSync())
             
             const labelMap = new Map([
-                [0, "flip flop"],
-                [1, "foot"],
-                [2, "hand"],
-                [3, "hedgehog"],
-                [4, "hourse"],
-                [5, "line"],
-                [6, "microphone"],
-                [7, "skull"],
-                [8, "steak"],
-                [9, "table"],
-                [10, "telephone"]
-                            ]);
+                [0, "banana"],
+                [1, "book"],
+                [2, "car"],
+                [3, "clock"],
+                [4, "cloud"],
+                [5, "hand"],
+                [6, "knife"],
+                [7, "pants"],
+                [8, "stop sign"],
+                [9, "weater"]]);
             console.log(labelMap.get(prediction.dataSync()[0]))
     
             
@@ -135,7 +133,7 @@ document.getElementById("retry").addEventListener('click',function(){
 },false);
 
 // items list
-var items=['foot','hand','hedgehog','horse','line',' microphone','skull','steak','table','telephone','filp flops']
+var items=['sweater', 'book', 'cloud', 'stop_sign', 'knife', 'banana', 'hand', 'pants', 'clock', 'car']
 
 // draw item table
 d3.select("#items")
