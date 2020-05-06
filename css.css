@@ -187,3 +187,9 @@ button {
   color: black; 
   border: 2px solid #f44336;
 }
+
+#pixelcheck{
+    width: 400px;
+    position: absolute;
+    top: 800px;
+}

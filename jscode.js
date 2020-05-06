@@ -28,7 +28,8 @@ var getInput=function(){
     var input7=tf.slice(input6,[2,2],[28,28])
     var finput=input7.reshape([1,28,28,1])
     console.log(finput.dataSync())
-
+    d3.select("#pixelcheck").select("p")
+    .text(finput.dataSync())
     return finput
 }
 
