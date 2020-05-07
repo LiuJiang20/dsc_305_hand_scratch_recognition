@@ -7,6 +7,21 @@ var context = canvas.getContext("2d");
 
 var counter=3
 
+function argSort(array){
+    var indexlist=[]
+    for (i=0;i<10;i++){
+        indexlist.push([i,array[i]])
+    }
+    indexlist.sort(
+        function(a,b){
+            return b[1]-a[1] 
+        }
+    )
+    var results=indexlist.map(x => x[0])
+
+    return results
+}
+
 var getInput=function(){
    var canvas = document.getElementById("c1")
    var ctx=canvas.getContext("2d")
@@ -14,7 +29,7 @@ var getInput=function(){
    console.log(data)
    var result=[]
    for (i=3;i<data.length;i+=4){
-       result.push(data[i]/255)
+       result.push(data[i])
        
    }
     console.log(result)
@@ -28,43 +43,19 @@ var getInput=function(){
     var input7=tf.slice(input6,[2,2],[28,28])
     var finput=input7.reshape([1,28,28,1])
     console.log(finput.dataSync())
-    d3.select("#pixelcheck").select("p")
-    .text(finput.dataSync())
     return finput
 }
 
-function distort(imageData) {
-  return tf.tidy(function () {
-    // The shape is (h, w, 1)
-    let tensor = tf.brower.fromPixels(imageData, numChannels = 1);
-
-    // Resize to 28x28 and normalize to 0 (black) and 1 (white)
-    let normalizedImage = tf.image.resizeBilinear(tensor, [28, 28]).toFloat();
-    normalizedImage = tf.ceil(normalizedImage.div(tf.scalar(255.0)));
-
-    // Add a dimension to get a batch shape so that the shape will become (1, h, w, 1)
-    return normalizedImage.expandDims(0);
-  })
-}
-
 async function getAnswer(){
-             console.log('start');
+        console.log('start');
         const model = await tf.loadLayersModel('https://raw.githubusercontent.com/LiuJiang20/dsc_305_hand_scratch_recognition/master/ten_class/model.json');
         console.log(model);
         console.log('done');
-  
-             //const model = await tf.loadLayersModel('');
-            //var canvas = document.getElementById("canvas");
-            //var context = canvas.getContext("2d");
-           // var image = document.getElementById('target');
 
-            //var hello=context.drawImage(image,28,28);
-
-           // console.log(target)
-            //const example = tf.browser.fromPixels(image);  // for example
             var input=getInput()
-            const prediction = model.predict(input).argMax([-1]);
-            console.log(prediction.dataSync())
+            const prediction = model.predict(input);
+            var inputList=prediction.dataSync()
+            var results=argSort(inputList)
             
             const labelMap = new Map([
                 [0, "banana"],
@@ -76,13 +67,29 @@ async function getAnswer(){
                 [6, "knife"],
                 [7, "pants"],
                 [8, "stop sign"],
-                [9, "weater"]]);
-            console.log(labelMap.get(prediction.dataSync()[0]))
-    
+                [9, "sweater"]]);
+            
+            results=results.map(x => labelMap.get(x))
+            console.log(results)
+            return results
             
   }
  
-            
+function guess(answer){
+
+        if(counter==3){
+            d3.select("#description")
+            .text("Is this a "+ answer[0]+" ?")
+        }
+        else if(counter=2){
+            d3.select("#description")
+            .text("Is this a "+ answer[1]+" ?")
+        }
+        else if(counter=1){
+            d3.select("#description")
+            .text("Is this a "+ answer[2]+" ?")
+        }
+}            
              
 
 window.onload = function () {
@@ -149,11 +156,10 @@ d3.select("#items")
 d3.select("#guess")
     .text("Guess "+counter+"/3")
     .on("click",function(){
-        if(counter==3){
-            getAnswer()
-            
-        }
-
+        var answer=getAnswer()
+        answer.then(guess)
+    
+    
         d3.select("#retry")
            .attr("class","disabled")
     
@@ -161,14 +167,7 @@ d3.select("#guess")
         .attr("class","normal")
     
         d3.select("#F")
-        .attr("class","normal")
-        
-        //model calculation
-        var answer="model answer"
-        d3.select("#description")
-            .text("This is a "+answer)
-        
-    
+        .attr("class","normal")    
 })
 
 d3.select("#F")
