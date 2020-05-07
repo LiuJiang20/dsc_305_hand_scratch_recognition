@@ -18,9 +18,9 @@ body {
 }
 
 #c1 {
-        background-color: beige;
+        background-color: transparent;
         position: absolute;
-        left:120px;
+        left:140px;
         top:220px;
     }
 
@@ -54,24 +54,24 @@ td{
 }
 
 #robotimg{
+    width: 450px;
     position: relative;
-    top:30px;
-    left: 50px;
-    width: 350px;
+    top: -200px;
+    left: -50px;
 }
 
 #mood{
     position: relative;
-    top: -320px;
-    left: -210px;
+    top: -750px;
+    left: -100px;
     width: 120px;
 }
 
 #bubble{
     width: 400px;
     position: relative;
-    top: -580px;
-    left: 150px;
+    top: -900px;
+    left: 130px;
 }
 
 #dialog{
@@ -81,7 +81,7 @@ td{
 #dialogText{
     width: 250px;
     position: absolute;
-    top:-500px;
+    top:-830px;
     left: 250px;
     transform: rotate(15deg);
     font-size: 20px;
@@ -127,16 +127,12 @@ button {
 #bluebutton{
     position: absolute;
     top: 725px;
-    left: 200px;
+    left: 230px;
 }
 
 #guess,#retry {
   background-color: #008CBA;
   color: white;
-}
-
-#guess{
-    width:200px;
 }
 
 #guess.normal:hover,#retry.normal:hover {
@@ -153,7 +149,7 @@ button {
 
 #decisionbutton{
     position: absolute;
-    top: 550px;
+    top: 500px;
     left: 1100px;
     width: 200px; 
 }

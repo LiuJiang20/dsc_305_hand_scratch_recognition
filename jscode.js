@@ -81,11 +81,11 @@ function guess(answer){
             d3.select("#description")
             .text("Is this a "+ answer[0]+" ?")
         }
-        else if(counter=2){
+        else if(counter==2){
             d3.select("#description")
             .text("Is this a "+ answer[1]+" ?")
         }
-        else if(counter=1){
+        else if(counter==1){
             d3.select("#description")
             .text("Is this a "+ answer[2]+" ?")
         }
@@ -120,6 +120,9 @@ window.onload = function () {
 
 // retry button click
 document.getElementById("retry").addEventListener('click',function(){
+    
+    counter=3
+    
     context.clearRect(0,0,canvas.width,canvas.height);
     context.beginPath();
     // disable buttons
@@ -138,6 +141,15 @@ document.getElementById("retry").addEventListener('click',function(){
     
     d3.select("#mood")
         .attr("src","./imgs/counter3.gif")
+    
+    d3.select("#description")
+    .text("Please selet one item to draw from the current list.")
+    
+    d3.select("#robotimg")
+    .attr("src","./imgs/counter"+counter+".png")
+        
+    
+    
 },false);
 
 // items list
@@ -153,12 +165,13 @@ d3.select("#items")
     return i;
 })
 
+var answer="x"
+
 d3.select("#guess")
-    .text("Guess "+counter+"/3")
+    .text("Guess")
     .on("click",function(){
-        var answer=getAnswer()
+        answer=getAnswer()
         answer.then(guess)
-    
     
         d3.select("#retry")
            .attr("class","disabled")
@@ -172,27 +185,20 @@ d3.select("#guess")
 
 d3.select("#F")
 .on("click",function(){
-    if (counter>=1){
-        counter=counter-1
-        d3.select("#guess")
-            .text("Guess "+counter+"/3")
-        d3.select("#mood")
-            .attr("src","./imgs/counter"+counter+".gif")
-        
-        if (counter!=3){
-            d3.select("#description")
-                .text("Please give me one more chance...")
-        }
+    if (counter!=1){
+        console.log("counter is " + counter)
+        counter--
+        console.log("counter is " + counter)
+        answer.then(guess)
+        d3.select("#robotimg")
+            .attr("src","./imgs/counter"+counter+".png")
+        console.log("counter last is " + counter)
     }
-    
-    if (counter==0){
+
+    else {
+        counter--
         d3.select("#retry")
            .attr("class","normal")
-           .on("click",function(){
-                counter=3
-                d3.select("#guess")
-                   .text("Guess "+counter+"/3")
-                console.log(counter)})
         d3.select("#guess")
            .attr("class","disabled")
         d3.select("#T")
@@ -202,24 +208,25 @@ d3.select("#F")
         d3.select("#changelist")
            .attr("class","normal")
         d3.select("#description")
-                .text("I'm so sorry, I have no idea what u are drawing about...")
-         } 
+            .text("I'm so sorry, I have no idea what u are drawing about...")
+        d3.select("#robotimg")
+            .attr("src","./imgs/counter"+counter+".png")
+        d3.select("#mood")
+            .attr("src","./imgs/counter0.gif")
+         }
+    
     })
 
 d3.select("#T")
     .on("click",function(){
-            d3.select("#retry")
+            
+    d3.select("#retry")
               .attr("class","normal")
-    
-            counter=3
-            d3.select("#guess")
-              .text("Guess "+counter+"/3")
-            console.log(counter)
             
             d3.select("#description")
                 .text("Now you know why I am AI? yeahhhhh!")
     
-            d3.select("#mood")
+            d3.select("#robotimg")
                 .attr("src","./imgs/happy.gif")
     
 })
