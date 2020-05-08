@@ -139,8 +139,7 @@ document.getElementById("retry").addEventListener('click',function(){
     d3.select('#changelist')
          .attr("class","normal");
     
-    d3.select("#mood")
-        .attr("src","./imgs/counter3.gif")
+    d3.select("#mood").remove()
     
     d3.select("#description")
     .text("Please selet one item to draw from the current list.")
@@ -211,8 +210,10 @@ d3.select("#F")
             .text("I'm so sorry, I have no idea what u are drawing about...")
         d3.select("#robotimg")
             .attr("src","./imgs/counter"+counter+".png")
-        d3.select("#mood")
+        d3.select("#robot")
+            .insert("img",'#robotimg + *')
             .attr("src","./imgs/counter0.gif")
+            .attr("id","mood")
          }
     
     })
