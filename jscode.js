@@ -7,6 +7,23 @@ var context = canvas.getContext("2d");
 
 var counter=3
 
+var answer="x"
+
+// items list
+var items=['sweater', 'book', 'cloud', 'stop_sign', 'knife', 'banana', 'hand', 'pants', 'clock', 'car']
+
+
+// draw item table
+d3.select("#items")
+    .selectAll("td")
+    .data(items)
+    .enter()
+    .append("td")
+    .text(function(i){
+    return i;
+})
+
+// sort array according to possibility from high to low
 function argSort(array){
     var indexlist=[]
     for (i=0;i<10;i++){
@@ -22,6 +39,7 @@ function argSort(array){
     return results
 }
 
+// get input with size that model can process
 var getInput=function(){
    var canvas = document.getElementById("c1")
    var ctx=canvas.getContext("2d")
@@ -46,17 +64,21 @@ var getInput=function(){
     return finput
 }
 
+// get an answer array
 async function getAnswer(){
+        // load model
         console.log('start');
         const model = await tf.loadLayersModel('https://raw.githubusercontent.com/LiuJiang20/dsc_305_hand_scratch_recognition/master/ten_class/model.json');
         console.log(model);
         console.log('done');
-
+            
+    //get input
             var input=getInput()
+    // put input into model and get an array of possibility
             const prediction = model.predict(input);
             var inputList=prediction.dataSync()
             var results=argSort(inputList)
-            
+    // a map connects index in answer array to words
             const labelMap = new Map([
                 [0, "banana"],
                 [1, "book"],
@@ -68,7 +90,7 @@ async function getAnswer(){
                 [7, "pants"],
                 [8, "stop sign"],
                 [9, "sweater"]]);
-            
+       //get an array of answer     
             results=results.map(x => labelMap.get(x))
             console.log(results)
             return results
@@ -76,7 +98,7 @@ async function getAnswer(){
   }
  
 function guess(answer){
-
+        // show the answer according to the counter
         if(counter==3){
             d3.select("#description")
             .text("Is this a "+ answer[0]+" ?")
@@ -93,11 +115,10 @@ function guess(answer){
              
 
 window.onload = function () {
-    
+    // let user can draw on canvas
     canvas.onmousedown = function (ev) {
         var ev = ev || window.event;
         context.moveTo(ev.clientX - canvas.offsetLeft, ev.clientY - canvas.offsetTop);
-        //ev.clientX-oC.offsetLeft,ev.clientY-oC.offsetTop鼠标在当前画布上X,Y坐标
         
         document.onmousemove = function (ev) {
                 var ev = ev || window.event;//获取event对象
@@ -122,7 +143,7 @@ window.onload = function () {
 document.getElementById("retry").addEventListener('click',function(){
     
     counter=3
-    
+    // clear the canvas content
     context.clearRect(0,0,canvas.width,canvas.height);
     context.beginPath();
     // disable buttons
@@ -146,25 +167,8 @@ document.getElementById("retry").addEventListener('click',function(){
     
     d3.select("#robotimg")
     .attr("src","./imgs/counter"+counter+".png")
-        
-    
-    
+         
 },false);
-
-// items list
-var items=['sweater', 'book', 'cloud', 'stop_sign', 'knife', 'banana', 'hand', 'pants', 'clock', 'car']
-
-// draw item table
-d3.select("#items")
-    .selectAll("td")
-    .data(items)
-    .enter()
-    .append("td")
-    .text(function(i){
-    return i;
-})
-
-var answer="x"
 
 d3.select("#guess")
     .text("Guess")
